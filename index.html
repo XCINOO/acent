@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4c4ddc">
+<title>مومنتوم — مأموریت‌های روزانه</title>
+<style>
+:root{--bg:#eef1f8;--card:#fff;--ink:#16213e;--mut:#5a6483;--line:#d9deee;--acc:#4c4ddc;--accsoft:#e4e5fb;--xp:#b97800;--xpbar:#f2a900;--ok:#0b7f72;--danger:#b3261e;--r:14px}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1426;--card:#181f38;--ink:#eef1ff;--mut:#a3accb;--line:#2a3354;--acc:#8a8bff;--accsoft:#252b52;--xp:#ffc233;--xpbar:#f2a900;--ok:#3fd3c0;--danger:#ff8a80}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 Vazirmatn,Tahoma,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+header{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0 16px}
+h1{font-size:1.25rem;margin:0;letter-spacing:-.01em}
+h2{font-size:1.05rem;margin:0 0 12px}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;min-height:44px;border-radius:10px;border:1px solid var(--line);background:var(--card);padding:0 14px}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+@media(prefers-color-scheme:dark){button.pri{color:#0f1426}}
+button.ghost{background:transparent}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.grid{display:grid;gap:16px;grid-template-columns:1fr}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.hero{display:grid;gap:12px}
+.lvl{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.lvl strong{font-size:2.4rem;line-height:1;letter-spacing:-.03em}
+.bar{height:14px;background:var(--accsoft);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;width:0;background:var(--xpbar);border-radius:99px;transition:width .5s ease}
+.sub{color:var(--mut);font-size:.9rem;margin:0}
+.msg{font-weight:600;margin:0;min-height:1.5em}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.stat{background:var(--bg);border-radius:10px;padding:10px 12px}
+.stat b{display:block;font-size:1.35rem}
+.stat span{color:var(--mut);font-size:.85rem}
+form.add{display:grid;gap:8px;grid-template-columns:1fr}
+input[type=text],select{min-height:44px;border:1px solid var(--line);border-radius:10px;padding:0 12px;background:var(--bg);width:100%}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+li.q{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+li.q .t{flex:1;min-width:0;overflow-wrap:anywhere}
+li.q .x{color:var(--xp);font-weight:700;font-size:.9rem;white-space:nowrap}
+li.q.done .t{text-decoration:line-through;color:var(--mut)}
+.chk{width:44px;padding:0;border-radius:50%;border:2px solid var(--acc);background:transparent;font-weight:700;color:var(--acc)}
+.done .chk{background:var(--ok);border-color:var(--ok);color:#fff}
+.del{color:var(--danger);border:0;background:transparent;width:44px;padding:0}
+.empty{text-align:center;padding:28px 8px}
+.empty h3{margin:0;letter-spacing:.04em}
+.empty p{color:var(--mut);margin:6px 0 16px}
+.week{display:flex;gap:6px;align-items:flex-end;height:90px}
+.week div{flex:1;text-align:center;font-size:.75rem;color:var(--mut)}
+.week i{display:block;background:var(--acc);border-radius:6px 6px 2px 2px;min-height:4px;margin-bottom:4px;opacity:.85}
+.ach{display:grid;gap:8px;grid-template-columns:1fr 1fr}
+.a{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:.88rem}
+.a.off{opacity:.5}.a.on{background:var(--accsoft);border-color:var(--acc)}
+.a b{display:block}
+.cele{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;max-width:92vw;opacity:0;pointer-events:none;transition:opacity .4s,transform .4s;text-align:center;z-index:9}
+.cele.show{opacity:1;transform:translate(-50%,0)}
+.langs{display:flex;gap:4px}.langs button[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:#fff}@media(prefers-color-scheme:dark){.langs button[aria-pressed=true]{color:#0f1426}}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+.note{font-size:.8rem;color:var(--mut);margin:10px 0 0}
+.pop{animation:pop .35s ease}
+@keyframes pop{50%{transform:scale(1.04)}}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(min-width:640px){.wrap{padding:24px}form.add{grid-template-columns:1fr 160px auto}.stats{grid-template-columns:repeat(4,1fr)}.ach{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1024px){.grid{grid-template-columns:1.6fr 1fr;align-items:start}.span{grid-column:1/-1}}
+@media(min-width:1600px){.wrap{max-width:1400px}body{font-size:18px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><h1 data-i18n="brand">Momentum</h1><div class="tools"><div class="langs" role="group" aria-label="زبان / Language"><button id="lfa" data-l="fa">فارسی</button><button id="len" data-l="en">English</button></div><button class="ghost" id="exp" data-i18n="exp">Export data</button><button class="ghost" id="imp" data-i18n="imp">Import data</button><input type="file" id="file" accept="application/json,.json" class="vh" tabindex="-1" aria-hidden="true"></div></header>
+<main class="grid">
+<section class="card hero span" data-i18n-aria="progress" aria-label="Progress">
+<div class="lvl"><div><p class="sub" data-i18n="level">Level</p><strong id="lv">1</strong></div><div style="text-align:end"><p class="sub" data-i18n="totalXp">Total XP</p><b id="txp">0</b></div></div>
+<div class="bar" role="progressbar" id="pb" data-i18n-aria="pbar" aria-label="Progress to next level" aria-valuemin="0" aria-valuemax="100"><i id="pf"></i></div>
+<p class="sub" id="nxt"></p>
+<p class="msg" id="msg" aria-live="polite"></p>
+<div class="stats">
+<div class="stat"><b id="sTodayXp">0</b><span data-i18n="xpToday">XP today</span></div>
+<div class="stat"><b id="sStreak">0</b><span data-i18n="streak">Day streak</span></div>
+<div class="stat"><b id="sBest">0</b><span data-i18n="best">Best streak</span></div>
+<div class="stat"><b id="sDone">0</b><span data-i18n="done">Quests done</span></div>
+</div>
+</section>
+<section class="card" data-i18n-aria="quests" aria-label="Quests">
+<h2 data-i18n="quests">Today's quests</h2>
+<form class="add" id="f"><label class="vh" for="ti" data-i18n="qname">Quest name</label><input type="text" id="ti" maxlength="80" data-i18n-ph="ph" placeholder="What's the next step?" autocomplete="off"><label class="vh" for="df" data-i18n="size">Size</label><select id="df"><option value="10" data-i18n="o10"></option><option value="25" selected data-i18n="o25"></option><option value="50" data-i18n="o50"></option></select><button class="pri" type="submit" data-i18n="add">Add quest</button></form>
+<ul id="list" style="margin-top:12px"></ul>
+</section>
+<aside style="display:grid;gap:16px">
+<section class="card"><h2 data-i18n="last7">Last 7 days</h2><div class="week" id="week" role="img" data-i18n-aria="weekAria" aria-label=""></div><p class="sub" id="imp2" style="margin-top:10px"></p></section>
+<section class="card"><h2 data-i18n="achT">Achievements</h2><div class="ach" id="ach"></div>
+<p class="note" data-i18n="note"></p></section>
+</aside>
+</main>
+</div>
+<div class="cele" id="cele" role="status" aria-live="polite"></div>
+<script>
+(function(){
+"use strict";
+var KEY="momentum.appState",VER=1;
+var ACH=[
+{id:"first",n:"First step",d:"Finish a quest",t:function(s){return s.stats.totalDone>=1}},
+{id:"ten",n:"Ten down",d:"Finish 10 quests",t:function(s){return s.stats.totalDone>=10}},
+{id:"fifty",n:"Half a hundred",d:"Finish 50 quests",t:function(s){return s.stats.totalDone>=50}},
+{id:"s3",n:"Three days in",d:"3-day streak",t:function(s){return s.user.bestStreak>=3}},
+{id:"s7",n:"A full week",d:"7-day streak",t:function(s){return s.user.bestStreak>=7}},
+{id:"l5",n:"Level 5",d:"Reach level 5",t:function(s){return s.user.level>=5}},
+{id:"d100",n:"Big day",d:"Earn 100 XP in a day",t:function(s){var h=s.dailyHistory[today()];return !!h&&h.xp>=100}}
+];
+function pad(n){return n<10?"0"+n:""+n}
+function key(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+function today(){return key(new Date())}
+function daysAgo(n){var d=new Date();d.setDate(d.getDate()-n);return key(d)}
+function fresh(){return{version:VER,user:{xp:0,level:1,streak:0,bestStreak:0,lastActive:null},tasks:[],dailyHistory:{},achievements:{},stats:{totalDone:0,totalXp:0},settings:{}}}
+function need(l){return 100+(l-1)*50}
+function calc(xp){var l=1,r=xp;while(r>=need(l)){r-=need(l);l++}return{level:l,into:r,need:need(l)}}
+function num(v){return typeof v==="number"&&isFinite(v)&&v>=0}
+function valid(o){
+if(!o||typeof o!=="object"||!num(o.version)||o.version>VER)return false;
+var u=o.user;if(!u||!num(u.xp)||!num(u.streak)||!num(u.bestStreak))return false;
+if(!Array.isArray(o.tasks))return false;
+for(var i=0;i<o.tasks.length;i++){var t=o.tasks[i];if(!t||typeof t.title!=="string"||!num(t.xp)||typeof t.done!=="boolean"||typeof t.id!=="string")return false}
+if(!o.dailyHistory||typeof o.dailyHistory!=="object"||Array.isArray(o.dailyHistory))return false;
+for(var k in o.dailyHistory){if(!/^\d{4}-\d{2}-\d{2}$/.test(k)||!num(o.dailyHistory[k].xp)||!num(o.dailyHistory[k].done))return false}
+if(!o.achievements||typeof o.achievements!=="object"||!o.stats||!num(o.stats.totalDone)||!num(o.stats.totalXp))return false;
+return true}
+function migrate(o){var f=fresh();o.user=Object.assign(f.user,o.user);o.settings=o.settings||{};o.version=VER;o.user.level=calc(o.user.xp).level;return o}
+function load(){try{var raw=localStorage.getItem(KEY);if(raw){var o=JSON.parse(raw);if(valid(o))return migrate(o)}}catch(e){}return fresh()}
+var S=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));return true}catch(e){return false}}
+function checkStreakOnLoad(){var la=S.user.lastActive;if(la&&la!==today()&&la!==daysAgo(1)){S.user.streak=0;save()}}
+var $=function(id){return document.getElementById(id)};
+var TX={
+fa:{brand:"مومنتوم",exp:"خروجی گرفتن",imp:"وارد کردن اطلاعات",level:"سطح",totalXp:"کل XP",progress:"پیشرفت",pbar:"پیشرفت تا سطح بعدی",xpToday:"XP امروز",streak:"روز پیاپی",best:"بهترین رکورد",done:"مأموریت انجام‌شده",quests:"مأموریت‌های امروز",qname:"نام مأموریت",ph:"قدم بعدی چیه؟",size:"اندازه",o10:"کوچک · ۱۰ XP",o25:"متوسط · ۲۵ XP",o50:"بزرگ · ۵۰ XP",add:"افزودن مأموریت",last7:"۷ روز اخیر",weekAria:"XP کسب‌شده در ۷ روز اخیر",achT:"دستاوردها",note:"پیشرفتت فقط روی همین مرورگر ذخیره می‌شه. برای پشتیبان‌گیری یا انتقال به دستگاه دیگه، «خروجی گرفتن» رو بزن.",
+title:"مومنتوم — مأموریت‌های روزانه",empty:"هنوز مأموریتی نیست",emptyP:"با یه کار کوچیک شروع کن.",first:"اولین مأموریتت رو بساز",
+next:"{n} XP تا سطح {l}",m:["یکی دیگه انجام شد.","یه قدم دیگه.","ادامه بده.","شتابت حفظ شد."],lvlUp:"سطح بالا رفتی. حالا سطح {l} هستی.",achU:"دستاورد باز شد: {n}",
+ahead:"از دیروز جلوتری.",keep:"شتابت رو حفظ کن.",alive:"رکوردت زنده‌ست. برای ادامه‌ش یه کار کوچیک انجام بده.",begin:"یه مأموریت کوچیک انتخاب کن و شروع کن.",
+up:"{p}٪ بیشتر از هفته قبل.",wk:"{n} XP در این هفته.",exported:"خروجی ذخیره شد.",imported:"اطلاعات وارد شد.",invalid:"این فایل داده‌ی معتبر مومنتوم نیست. چیزی تغییر نکرد.",confirm:"پیشرفت فعلی‌ت با این فایل جایگزین بشه؟",comp:"تکمیل: ",compd:"انجام شد: ",del:"حذف ",
+ach:{first:["اولین قدم","یک مأموریت رو تموم کن"],ten:["ده‌تایی","۱۰ مأموریت انجام بده"],fifty:["نیم‌سنچری","۵۰ مأموریت انجام بده"],s3:["سه روز پیاپی","رکورد ۳ روزه"],s7:["یک هفته کامل","رکورد ۷ روزه"],l5:["سطح ۵","به سطح ۵ برس"],d100:["روز بزرگ","در یک روز ۱۰۰ XP بگیر"]}},
+en:{brand:"Momentum",exp:"Export data",imp:"Import data",level:"Level",totalXp:"Total XP",progress:"Progress",pbar:"Progress to next level",xpToday:"XP today",streak:"Day streak",best:"Best streak",done:"Quests done",quests:"Today's quests",qname:"Quest name",ph:"What's the next step?",size:"Size",o10:"Small · 10 XP",o25:"Medium · 25 XP",o50:"Big · 50 XP",add:"Add quest",last7:"Last 7 days",weekAria:"XP earned in the last 7 days",achT:"Achievements",note:"Progress is saved in this browser only. Use Export data to back it up or move it to another device.",
+title:"Momentum — daily quests",empty:"NO QUESTS YET",emptyP:"Start with something small.",first:"CREATE YOUR FIRST QUEST",
+next:"{n} XP to level {l}",m:["One more done.","Another step.","Keep moving.","Momentum maintained."],lvlUp:"Level up. You're now level {l}.",achU:"Achievement unlocked: {n}",
+ahead:"You're ahead of yesterday.",keep:"Keep your momentum.",alive:"Streak is alive. Do one small thing to extend it.",begin:"Pick one small quest to begin.",
+up:"Up {p}% on the week before.",wk:"{n} XP this week.",exported:"Data exported.",imported:"Progress imported.",invalid:"That file isn't valid Momentum data. Nothing changed.",confirm:"Replace your current progress with this file?",comp:"Complete: ",compd:"Completed: ",del:"Delete ",
+ach:{first:["First step","Finish a quest"],ten:["Ten down","Finish 10 quests"],fifty:["Half a hundred","Finish 50 quests"],s3:["Three days in","3-day streak"],s7:["A full week","7-day streak"],l5:["Level 5","Reach level 5"],d100:["Big day","Earn 100 XP in a day"]}}};
+function L(){return S.settings&&S.settings.lang==="en"?"en":"fa"}
+function tr(k,o){var v=TX[L()][k];if(typeof v==="string"&&o)for(var p in o)v=v.replace("{"+p+"}",o[p]);return v}
+function N(x){return new Intl.NumberFormat(L()==="fa"?"fa-IR":"en-US").format(x)}
+function applyLang(){var l=L(),h=document.documentElement;h.lang=l;h.dir=l==="fa"?"rtl":"ltr";document.title=tr("title");
+document.querySelectorAll("[data-i18n]").forEach(function(e){e.textContent=tr(e.dataset.i18n)});
+document.querySelectorAll("[data-i18n-ph]").forEach(function(e){e.placeholder=tr(e.dataset.i18nPh)});
+document.querySelectorAll("[data-i18n-aria]").forEach(function(e){e.setAttribute("aria-label",tr(e.dataset.i18nAria))});
+$("lfa").setAttribute("aria-pressed",l==="fa");$("len").setAttribute("aria-pressed",l==="en")}
+
+var timer;
+function celebrate(t){var c=$("cele");c.textContent=t;c.classList.add("show");clearTimeout(timer);timer=setTimeout(function(){c.classList.remove("show")},3200)}
+function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function addTask(title,xp){S.tasks.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:title,xp:xp,done:false,created:today(),doneAt:null});save();render()}
+function complete(id){
+var t=S.tasks.filter(function(x){return x.id===id})[0];if(!t||t.done)return;
+var prev=S.user.level,td=today();
+t.done=true;t.doneAt=td;
+S.user.xp+=t.xp;S.stats.totalDone++;S.stats.totalXp+=t.xp;
+var h=S.dailyHistory[td]||(S.dailyHistory[td]={xp:0,done:0});h.xp+=t.xp;h.done++;
+if(S.user.lastActive!==td){S.user.streak=S.user.lastActive===daysAgo(1)?S.user.streak+1:1;S.user.lastActive=td}
+if(S.user.streak>S.user.bestStreak)S.user.bestStreak=S.user.streak;
+S.user.level=calc(S.user.xp).level;
+var unlocked=[];ACH.forEach(function(a){if(!S.achievements[a.id]&&a.t(S)){S.achievements[a.id]=td;unlocked.push(a)}});
+save();
+var mm=TX[L()].m;
+var line=mm[S.stats.totalDone%mm.length]+" +"+N(t.xp)+" XP";
+var big=false;
+if(S.user.level>prev){line=tr("lvlUp",{l:N(S.user.level)});big=true}
+else if(unlocked.length){line=tr("achU",{n:TX[L()].ach[unlocked[0].id][0]});big=true}
+render(line);
+if(big)celebrate(line);
+}
+function remove(id){S.tasks=S.tasks.filter(function(x){return x.id!==id});save();render()}
+function render(line){
+var c=calc(S.user.xp),td=today(),h=S.dailyHistory[td]||{xp:0,done:0},y=S.dailyHistory[daysAgo(1)]||{xp:0};
+applyLang();$("lv").textContent=N(S.user.level);$("txp").textContent=N(S.user.xp);
+var pct=Math.round(c.into/c.need*100);
+$("pf").style.width=pct+"%";$("pb").setAttribute("aria-valuenow",pct);
+$("nxt").textContent=tr("next",{n:N(c.need-c.into),l:N(S.user.level+1)});
+$("sTodayXp").textContent=N(h.xp);$("sStreak").textContent=N(S.user.streak);$("sBest").textContent=N(S.user.bestStreak);$("sDone").textContent=N(S.stats.totalDone);
+var m=line;
+if(!m){m=h.xp>0?(h.xp>y.xp&&y.xp>0?tr("ahead"):tr("keep")):(S.user.streak>0?tr("alive"):tr("begin"))}
+$("msg").textContent=m;
+if(line){$("msg").classList.remove("pop");void $("msg").offsetWidth;$("msg").classList.add("pop")}
+var open=S.tasks.filter(function(t){return !t.done}),done=S.tasks.filter(function(t){return t.done&&t.doneAt===td});
+var list=$("list");
+if(!S.tasks.length){list.innerHTML='<li class="empty"><h3>'+tr("empty")+'</h3><p>'+tr("emptyP")+'</p><button class="pri" id="first">'+tr("first")+'</button></li>';
+$("first").onclick=function(){$("ti").focus()}}
+else{list.innerHTML=open.concat(done).map(function(t){return '<li class="q'+(t.done?" done":"")+'"><button class="chk" data-c="'+t.id+'" aria-label="'+(t.done?tr("compd"):tr("comp"))+esc(t.title)+'"'+(t.done?" disabled":"")+'>'+(t.done?"✓":"")+'</button><span class="t">'+esc(t.title)+'</span><span class="x">+'+N(t.xp)+'</span><button class="del" data-d="'+t.id+'" aria-label="'+tr("del")+esc(t.title)+'">✕</button></li>'}).join("")}
+var w="",mx=1,days=[];
+for(var i=6;i>=0;i--){var k=daysAgo(i),d=new Date();d.setDate(d.getDate()-i);var xp=(S.dailyHistory[k]||{xp:0}).xp;days.push([d.toLocaleDateString(L()==="fa"?"fa-IR":"en-US",{weekday:L()==="fa"?"narrow":"short"}).slice(0,L()==="fa"?3:2),xp]);if(xp>mx)mx=xp}
+days.forEach(function(d){w+='<div><i style="height:'+Math.round(d[1]/mx*60)+'px"></i>'+d[0]+'</div>'});
+$("week").innerHTML=w;
+var tw=0,lw=0;for(i=0;i<7;i++){tw+=(S.dailyHistory[daysAgo(i)]||{xp:0}).xp;lw+=(S.dailyHistory[daysAgo(i+7)]||{xp:0}).xp}
+$("imp2").textContent=tw>lw&&lw>0?tr("up",{p:N(Math.round((tw-lw)/lw*100))}):tr("wk",{n:N(tw)});
+$("ach").innerHTML=ACH.map(function(a){var on=!!S.achievements[a.id];return '<div class="a '+(on?"on":"off")+'"><b>'+TX[L()].ach[a.id][0]+'</b>'+TX[L()].ach[a.id][1]+'</div>'}).join("");
+}
+$("f").addEventListener("submit",function(e){e.preventDefault();var v=$("ti").value.trim();if(!v)return;addTask(v,parseInt($("df").value,10));$("ti").value="";$("ti").focus()});
+$("list").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;if(b.dataset.c)complete(b.dataset.c);else if(b.dataset.d)remove(b.dataset.d)});
+$("exp").onclick=function(){var b=new Blob([JSON.stringify(S,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="momentum-"+today()+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000);celebrate(tr("exported"))};
+$("imp").onclick=function(){$("file").click()};
+$("file").addEventListener("change",function(e){
+var f=e.target.files[0];if(!f)return;
+var r=new FileReader();r.onload=function(){
+try{var o=JSON.parse(r.result);if(!valid(o))throw 0;
+if(!confirm(tr("confirm")))return;
+S=migrate(o);if(!S.settings.lang)S.settings.lang=L();save();checkStreakOnLoad();render();celebrate(tr("imported"))}
+catch(err){celebrate(tr("invalid"))}};
+r.readAsText(f);e.target.value=""});
+document.querySelectorAll(".langs button").forEach(function(b){b.onclick=function(){S.settings.lang=b.dataset.l;save();render()}});
+checkStreakOnLoad();render();
+})();
+</script>
+</body>
+</html>
